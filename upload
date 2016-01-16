@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -e
+
+if test -z "$bintray_api_key"; then
+  echo 'bintray_api_key must be set'
+  exit 2
+fi
+
+upload() {
+  path="$1"
+  file="$2"
+
+  repo=pycurl
+  package=pycurl
+  version=`dirname $path`
+
+  curl -sfIL https://api.bintray.com/packages/pycurl/$repo/$package || (
+    data=$(cat <<-EOT
+      {"name":"$package",
+      "licenses":["LGPL-2.1", "MIT"],
+      "vcs_url":"https://github.com/pycurl/pycurl"}
+EOT
+    ) &&
+    curl -sfd "$data" -uop:$bintray_api_key -Hcontent-type:application/json https://api.bintray.com/packages/pycurl/$repo
+  )
+
+  curl -sfIL https://api.bintray.com/packages/pycurl/$repo/$package/versions/$version || (
+    data=$(cat <<-EOT
+      {"name":"$version"}
+EOT
+    ) &&
+    curl -sfd "$data" -uop:$bintray_api_key -Hcontent-type:application/json https://api.bintray.com/packages/pycurl/$repo/$package/versions
+  )
+
+  curl -sfT $path -uop:$bintray_api_key https://api.bintray.com/content/pycurl/$repo/$package/$version/$file'?publish=1'
+}
+
+for path in `git ls-files |grep ^7`; do
+  file=`basename $path`
+  echo $file
+
+  curl -sfIL "https://dl.bintray.com/pycurl/pycurl/$file" || upload $path $file
+done
