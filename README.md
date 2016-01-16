@@ -11,3 +11,5 @@ A list of all available files is available
 To contribute a binary distribution for your system,
 please fork this repository, add your files under the appropriate version
 and send a pull request.
+
+<a href='http://www.bintray.com/pycurl/pycurl/pycurl/view'><img src='http://www.bintray.com/docs/images/poweredByBintray_ColorTransparent.png'></a>
