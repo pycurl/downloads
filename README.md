@@ -3,10 +3,11 @@
 This repository contains PycURL source and binary distributions.
 
 It is mirrored to
-[SourceForge download area](http://pycurl.sourceforge.net/download/).
+[Bintray](https://bintray.com/pycurl/pycurl/pycurl/view).
+Please use Bintray to download the files.
+A list of all available files is available
+[here](https://dl.bintray.com/pycurl/pycurl/).
 
 To contribute a binary distribution for your system,
-please fork this repository, add your files and send a pull request.
-
-Binary distributions made from development snapshots may be found at
-[development downloads repository](https://github.com/pycurl/dev-downloads).
+please fork this repository, add your files under the appropriate version
+and send a pull request.
